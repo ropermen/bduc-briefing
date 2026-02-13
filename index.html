@@ -81,6 +81,20 @@ p{font-size:1.05rem;color:#4a5568}
 .cta-btn{display:inline-block;background:#fff;color:#2b6cb0;padding:16px 40px;border-radius:50px;font-weight:700;font-size:1.05rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.15);transition:transform .2s}
 .cta-btn:hover{transform:scale(1.05)}
 
+/* Downloads */
+.downloads{background:#fff;padding:60px 0}
+.downloads h2{color:#1a365d;margin-bottom:8px}
+.downloads-subtitle{color:#718096;font-size:1.05rem;margin-bottom:36px}
+.downloads-grid{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.dl-card{display:flex;align-items:center;gap:16px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:14px;padding:20px 28px;text-decoration:none;color:#2d3748;transition:all .2s;min-width:240px}
+.dl-card:hover{border-color:#3182ce;box-shadow:0 6px 24px rgba(49,130,206,.12);transform:translateY(-2px)}
+.dl-icon{flex:0 0 52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.dl-icon-pdf{background:linear-gradient(135deg,#fc8181,#e53e3e)}
+.dl-icon-ppt{background:linear-gradient(135deg,#f6ad55,#dd6b20)}
+.dl-icon-html{background:linear-gradient(135deg,#63b3ed,#2b6cb0)}
+.dl-info h3{font-size:1rem;margin-bottom:2px}
+.dl-info p{font-size:.82rem;color:#a0aec0;margin:0}
+
 /* Footer */
 .footer{background:#1a365d;color:rgba(255,255,255,.6);padding:32px 0;text-align:center;font-size:.85rem}
 
@@ -519,6 +533,47 @@ p{font-size:1.05rem;color:#4a5568}
     <h2>Modernize a Gestão do seu Município</h2>
     <p>A BDUC é a plataforma que sua prefeitura precisa para oferecer serviços públicos mais eficientes, integrados e centrados no cidadão.</p>
     <a href="#" class="cta-btn">Solicite uma Demonstração</a>
+  </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section class="downloads" id="downloads">
+  <div class="container text-center">
+    <h2 class="animate">Baixe a Apresentação</h2>
+    <p class="downloads-subtitle animate">Disponível em três formatos para facilitar o compartilhamento.</p>
+    <div class="downloads-grid animate">
+
+      <a href="briefing_bduc.pdf" download class="dl-card">
+        <div class="dl-icon dl-icon-pdf">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6z" fill="#fff" opacity=".9"/><path d="M14 2l6 6h-4a2 2 0 0 1-2-2V2z" fill="#fff" opacity=".5"/><text x="12" y="18" text-anchor="middle" fill="#c53030" font-size="6" font-weight="700" font-family="sans-serif">PDF</text></svg>
+        </div>
+        <div class="dl-info">
+          <h3>Formato PDF</h3>
+          <p>Ideal para impressão e envio por e-mail</p>
+        </div>
+      </a>
+
+      <a href="briefing_bduc.pptx" download class="dl-card">
+        <div class="dl-icon dl-icon-ppt">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6z" fill="#fff" opacity=".9"/><path d="M14 2l6 6h-4a2 2 0 0 1-2-2V2z" fill="#fff" opacity=".5"/><text x="12" y="18" text-anchor="middle" fill="#9c4221" font-size="5.5" font-weight="700" font-family="sans-serif">PPT</text></svg>
+        </div>
+        <div class="dl-info">
+          <h3>Formato PowerPoint</h3>
+          <p>Editável para personalizar a apresentação</p>
+        </div>
+      </a>
+
+      <a href="index.html" download="briefing_bduc.html" class="dl-card">
+        <div class="dl-icon dl-icon-html">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6z" fill="#fff" opacity=".9"/><path d="M14 2l6 6h-4a2 2 0 0 1-2-2V2z" fill="#fff" opacity=".5"/><text x="12" y="18" text-anchor="middle" fill="#2b6cb0" font-size="4.5" font-weight="700" font-family="sans-serif">HTML</text></svg>
+        </div>
+        <div class="dl-info">
+          <h3>Formato HTML</h3>
+          <p>Página completa para visualizar no navegador</p>
+        </div>
+      </a>
+
+    </div>
   </div>
 </section>
 
