@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDUC - Base de Dados Única do Cidadão</title>
+<style>
+/* Reset & Base */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#2d3748;line-height:1.6;overflow-x:hidden}
+
+/* Utility */
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.section{padding:80px 0}
+.section-alt{background:#f7fafc}
+.text-center{text-align:center}
+.text-white{color:#fff}
+.mb-16{margin-bottom:16px}
+.mb-24{margin-bottom:24px}
+.mb-40{margin-bottom:40px}
+.mb-60{margin-bottom:60px}
+
+/* Typography */
+h1{font-size:2.8rem;font-weight:800;line-height:1.15}
+h2{font-size:2rem;font-weight:700;line-height:1.3}
+h3{font-size:1.35rem;font-weight:600}
+p{font-size:1.05rem;color:#4a5568}
+.subtitle{font-size:1.25rem;color:rgba(255,255,255,.9);max-width:700px;margin:0 auto}
+.section-subtitle{font-size:1.1rem;color:#718096;max-width:650px;margin:0 auto 48px}
+.badge{display:inline-block;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.3);padding:6px 18px;border-radius:50px;font-size:.85rem;font-weight:600;letter-spacing:.5px;color:#fff;margin-bottom:20px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 50%,#3182ce 100%);padding:100px 0 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-30%;left:-10%;width:400px;height:400px;background:radial-gradient(circle,rgba(99,179,237,.15) 0%,transparent 70%);border-radius:50%}
+.hero-content{position:relative;z-index:1;display:flex;align-items:center;gap:60px}
+.hero-text{flex:1}
+.hero-visual{flex:0 0 380px}
+.hero h1 span{color:#63b3ed}
+
+/* Benefits */
+.benefits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.benefit-card{background:#fff;border-radius:16px;padding:36px 28px;box-shadow:0 4px 24px rgba(0,0,0,.06);border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s;text-align:center}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.1)}
+.benefit-icon{width:72px;height:72px;margin:0 auto 20px;background:linear-gradient(135deg,#ebf8ff,#bee3f8);border-radius:16px;display:flex;align-items:center;justify-content:center}
+.benefit-card h3{margin-bottom:10px;color:#1a365d}
+.benefit-card p{font-size:.95rem;color:#718096}
+
+/* How it works */
+.flow-visual{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:48px}
+.flow-step{background:linear-gradient(135deg,#2b6cb0,#3182ce);color:#fff;padding:18px 24px;border-radius:12px;text-align:center;min-width:160px;font-weight:600;font-size:.95rem;box-shadow:0 4px 16px rgba(49,130,206,.3)}
+.flow-arrow{color:#3182ce;font-size:1.5rem;font-weight:700}
+
+/* API Section */
+.api-section{background:linear-gradient(135deg,#1a365d,#2c5282);color:#fff;padding:80px 0}
+.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.api-feature{display:flex;gap:16px;margin-bottom:28px;align-items:flex-start}
+.api-feature-icon{flex:0 0 48px;height:48px;background:rgba(99,179,237,.2);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.api-feature h3{color:#fff;font-size:1.1rem;margin-bottom:4px}
+.api-feature p{color:rgba(255,255,255,.75);font-size:.9rem}
+
+/* Features */
+.features-list{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.feature-item{display:flex;gap:16px;padding:24px;background:#fff;border-radius:12px;border:1px solid #e2e8f0;transition:all .2s}
+.feature-item:hover{border-color:#3182ce;box-shadow:0 4px 16px rgba(49,130,206,.1)}
+.feature-number{flex:0 0 40px;height:40px;background:linear-gradient(135deg,#3182ce,#2b6cb0);color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.feature-item h3{font-size:1rem;margin-bottom:4px;color:#1a365d}
+.feature-item p{font-size:.88rem;color:#718096}
+
+/* Stats */
+.stats-bar{background:linear-gradient(135deg,#2b6cb0,#2c5282);padding:48px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+.stat-item h3{font-size:2.2rem;font-weight:800;color:#63b3ed}
+.stat-item p{color:rgba(255,255,255,.8);font-size:.9rem;margin-top:4px}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,#2b6cb0,#3182ce);padding:80px 0;text-align:center}
+.cta h2{color:#fff;margin-bottom:16px}
+.cta p{color:rgba(255,255,255,.85);max-width:600px;margin:0 auto 32px}
+.cta-btn{display:inline-block;background:#fff;color:#2b6cb0;padding:16px 40px;border-radius:50px;font-weight:700;font-size:1.05rem;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,.15);transition:transform .2s}
+.cta-btn:hover{transform:scale(1.05)}
+
+/* Footer */
+.footer{background:#1a365d;color:rgba(255,255,255,.6);padding:32px 0;text-align:center;font-size:.85rem}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero-content{flex-direction:column;text-align:center}
+  .hero-visual{flex:0 0 auto;width:280px}
+  h1{font-size:2rem}
+  .benefits-grid{grid-template-columns:1fr}
+  .features-list{grid-template-columns:1fr}
+  .api-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .flow-visual{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg)}
+}
+@media(max-width:480px){
+  .section{padding:48px 0}
+  h1{font-size:1.7rem}
+}
+
+/* Animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.animate{opacity:0;transform:translateY(30px)}
+.animate.visible{animation:fadeUp .6s ease forwards}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="badge">PLATAFORMA DE GESTAO MUNICIPAL</span>
+        <h1 class="text-white mb-16">Base de Dados <span>Única</span> do Cidadão</h1>
+        <p class="subtitle mb-24">Centralize todas as informações dos cidadãos em uma única plataforma inteligente. Mais eficiência, menos retrabalho, melhor atendimento.</p>
+      </div>
+      <div class="hero-visual">
+        <!-- SVG: Ilustração de dashboard -->
+        <svg viewBox="0 0 380 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="340" height="260" rx="16" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+          <rect x="20" y="20" width="340" height="50" rx="16" fill="rgba(255,255,255,.15)"/>
+          <rect x="20" y="54" width="340" height="2" fill="rgba(255,255,255,.1)"/>
+          <circle cx="48" cy="45" r="8" fill="#63b3ed"/>
+          <circle cx="72" cy="45" r="8" fill="#4fd1c5"/>
+          <circle cx="96" cy="45" r="8" fill="#fc8181"/>
+          <text x="190" y="50" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="13" font-weight="600">Painel de Gestão do Cidadão</text>
+          <!-- Cards internos -->
+          <rect x="40" y="80" width="145" height="80" rx="10" fill="rgba(99,179,237,.2)" stroke="rgba(99,179,237,.3)" stroke-width="1"/>
+          <text x="112" y="105" text-anchor="middle" fill="#63b3ed" font-size="11" font-weight="600">Cidadãos Cadastrados</text>
+          <text x="112" y="140" text-anchor="middle" fill="#fff" font-size="28" font-weight="800">248.591</text>
+          <rect x="195" y="80" width="145" height="80" rx="10" fill="rgba(79,209,197,.2)" stroke="rgba(79,209,197,.3)" stroke-width="1"/>
+          <text x="267" y="105" text-anchor="middle" fill="#4fd1c5" font-size="11" font-weight="600">Atendimentos Hoje</text>
+          <text x="267" y="140" text-anchor="middle" fill="#fff" font-size="28" font-weight="800">1.342</text>
+          <!-- Gráfico de barras -->
+          <rect x="40" y="175" width="145" height="90" rx="10" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+          <text x="112" y="195" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="10">Cadastros por Mês</text>
+          <rect x="58" y="240" width="16" height="15" rx="2" fill="#63b3ed" opacity=".6"/>
+          <rect x="80" y="225" width="16" height="30" rx="2" fill="#63b3ed" opacity=".7"/>
+          <rect x="102" y="215" width="16" height="40" rx="2" fill="#63b3ed" opacity=".8"/>
+          <rect x="124" y="220" width="16" height="35" rx="2" fill="#63b3ed" opacity=".75"/>
+          <rect x="146" y="208" width="16" height="47" rx="2" fill="#63b3ed"/>
+          <!-- Lista -->
+          <rect x="195" y="175" width="145" height="90" rx="10" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
+          <text x="267" y="195" text-anchor="middle" fill="rgba(255,255,255,.6)" font-size="10">Módulos Ativos</text>
+          <circle cx="213" cy="213" r="4" fill="#4fd1c5"/>
+          <text x="224" y="216" fill="rgba(255,255,255,.7)" font-size="9">Saúde</text>
+          <circle cx="213" cy="230" r="4" fill="#63b3ed"/>
+          <text x="224" y="233" fill="rgba(255,255,255,.7)" font-size="9">Educação</text>
+          <circle cx="213" cy="247" r="4" fill="#f6ad55"/>
+          <text x="224" y="250" fill="rgba(255,255,255,.7)" font-size="9">Assistência Social</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item animate">
+        <h3>100%</h3>
+        <p>Digital e em Nuvem</p>
+      </div>
+      <div class="stat-item animate">
+        <h3>360°</h3>
+        <p>Visão do Cidadão</p>
+      </div>
+      <div class="stat-item animate">
+        <h3>24/7</h3>
+        <p>Disponibilidade</p>
+      </div>
+      <div class="stat-item animate">
+        <h3>API</h3>
+        <p>Integração Total</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section" id="beneficios">
+  <div class="container">
+    <h2 class="text-center mb-16 animate">Por que adotar a BDUC?</h2>
+    <p class="section-subtitle text-center animate">Transforme a gestão municipal com uma plataforma que coloca o cidadão no centro de todas as decisões.</p>
+    <div class="benefits-grid">
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 3C9.72 3 3 9.72 3 18s6.72 15 15 15 15-6.72 15-15S26.28 3 18 3zm-2 22l-7-7 2.12-2.12L16 20.76l8.88-8.88L27 14 16 25z" fill="#2b6cb0"/></svg>
+        </div>
+        <h3>Cadastro Único e Centralizado</h3>
+        <p>Todas as informações do cidadão reunidas em um só lugar, eliminando duplicidades e inconsistências nos registros municipais.</p>
+      </div>
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M30 6H6c-1.65 0-3 1.35-3 3v18c0 1.65 1.35 3 3 3h24c1.65 0 3-1.35 3-3V9c0-1.65-1.35-3-3-3zM6 27V9h24v18H6z" fill="#2b6cb0"/><path d="M15 12h6v3h-6zm0 5h6v3h-6zm-6 5h18v3H9z" fill="#2b6cb0" opacity=".5"/></svg>
+        </div>
+        <h3>Eliminação de Retrabalho</h3>
+        <p>O cidadão fornece seus dados uma única vez. Todos os departamentos acessam a mesma base, sem necessidade de recadastramento.</p>
+      </div>
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="12" r="5" fill="#2b6cb0"/><path d="M18 19c-5 0-15 2.5-15 7.5V30h30v-3.5c0-5-10-7.5-15-7.5z" fill="#2b6cb0" opacity=".7"/><circle cx="29" cy="10" r="3.5" fill="#2b6cb0" opacity=".5"/><circle cx="7" cy="10" r="3.5" fill="#2b6cb0" opacity=".5"/></svg>
+        </div>
+        <h3>Atendimento Humanizado</h3>
+        <p>Com o histórico completo do cidadão disponível, o atendente oferece um serviço mais ágil, personalizado e eficiente.</p>
+      </div>
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M19.5 3h-3v12.88l8.78 5.39 1.5-2.46-7.78-4.62V3z" fill="#2b6cb0"/><path d="M18 33c8.28 0 15-6.72 15-15h-3c0 6.63-5.37 12-12 12S6 24.63 6 18 11.37 6 18 6V3C9.72 3 3 9.72 3 18s6.72 15 15 15z" fill="#2b6cb0" opacity=".6"/></svg>
+        </div>
+        <h3>Agilidade nos Processos</h3>
+        <p>Reduza drasticamente o tempo de atendimento e de processamento de solicitações com dados pré-cadastrados e validados.</p>
+      </div>
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M31.5 16.5h-6V6h-15v10.5h-6L18 30l13.5-13.5zM12 12h12v7.17l-6 6-6-6V12z" fill="#2b6cb0"/><rect x="15" y="14" width="6" height="2" rx="1" fill="#fff"/><rect x="15" y="18" width="6" height="2" rx="1" fill="#fff"/></svg>
+        </div>
+        <h3>Gestão Baseada em Dados</h3>
+        <p>Relatórios e indicadores em tempo real para embasar políticas públicas com evidências concretas e dados consolidados.</p>
+      </div>
+
+      <div class="benefit-card animate">
+        <div class="benefit-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 3L3 9v9c0 8.28 6.39 16.02 15 18 8.61-1.98 15-9.72 15-18V9L18 3zm0 26.94C11.1 27.99 6 21.48 6 14.7V11.1l12-4.8 12 4.8v3.6c0 6.78-5.1 13.29-12 15.24z" fill="#2b6cb0"/><path d="M16 22l-4-4 2.12-2.12L16 17.76l5.88-5.88L24 14l-8 8z" fill="#2b6cb0" opacity=".7"/></svg>
+        </div>
+        <h3>Segurança e Conformidade</h3>
+        <p>Plataforma em conformidade com a LGPD, com controle de acesso por perfil, auditoria de operações e criptografia de dados.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-alt" id="como-funciona">
+  <div class="container">
+    <h2 class="text-center mb-16 animate">Como Funciona</h2>
+    <p class="section-subtitle text-center animate">Uma plataforma central que conecta todos os setores da administração municipal.</p>
+
+    <div class="flow-visual animate">
+      <div class="flow-step">Cidadão</div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-step">Cadastro Único<br><small style="opacity:.7;font-weight:400">BDUC</small></div>
+      <span class="flow-arrow">&#10132;</span>
+      <div class="flow-step">Saúde / Educação /<br>Social / Fazenda</div>
+    </div>
+
+    <!-- Ilustração de interoperabilidade -->
+    <div class="text-center animate">
+      <svg viewBox="0 0 700 320" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:700px;width:100%">
+        <!-- Centro: BDUC -->
+        <circle cx="350" cy="160" r="65" fill="#2b6cb0" stroke="#1a365d" stroke-width="3"/>
+        <text x="350" y="150" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">BDUC</text>
+        <text x="350" y="170" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="10">Base Central</text>
+
+        <!-- Saúde -->
+        <circle cx="120" cy="80" r="45" fill="#48bb78" opacity=".9"/>
+        <text x="120" y="75" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Saúde</text>
+        <text x="120" y="90" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">UBS / Hospitais</text>
+        <line x1="165" y1="95" x2="290" y2="145" stroke="#48bb78" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- Educação -->
+        <circle cx="120" cy="240" r="45" fill="#ed8936" opacity=".9"/>
+        <text x="120" y="235" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Educação</text>
+        <text x="120" y="250" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">Escolas / Creches</text>
+        <line x1="165" y1="225" x2="290" y2="175" stroke="#ed8936" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- Assistência Social -->
+        <circle cx="580" cy="80" r="45" fill="#9f7aea" opacity=".9"/>
+        <text x="580" y="70" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Assistência</text>
+        <text x="580" y="85" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">Social</text>
+        <text x="580" y="98" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">CRAS / CREAS</text>
+        <line x1="535" y1="95" x2="410" y2="145" stroke="#9f7aea" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- Fazenda / Tributos -->
+        <circle cx="580" cy="240" r="45" fill="#e53e3e" opacity=".8"/>
+        <text x="580" y="235" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Fazenda</text>
+        <text x="580" y="250" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">Tributos / Fiscal</text>
+        <line x1="535" y1="225" x2="410" y2="175" stroke="#e53e3e" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- Habitação (topo) -->
+        <circle cx="350" cy="30" r="38" fill="#38b2ac" opacity=".85"/>
+        <text x="350" y="28" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Habitação</text>
+        <text x="350" y="42" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">Moradia</text>
+        <line x1="350" y1="68" x2="350" y2="95" stroke="#38b2ac" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- Trabalho (rodapé) -->
+        <circle cx="350" cy="290" r="38" fill="#dd6b20" opacity=".85"/>
+        <text x="350" y="288" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">Trabalho</text>
+        <text x="350" y="302" text-anchor="middle" fill="rgba(255,255,255,.8)" font-size="9">Emprego</text>
+        <line x1="350" y1="252" x2="350" y2="225" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 3"/>
+
+        <!-- API labels -->
+        <rect x="215" y="105" width="40" height="18" rx="9" fill="#ebf8ff" stroke="#63b3ed" stroke-width="1"/>
+        <text x="235" y="118" text-anchor="middle" fill="#2b6cb0" font-size="8" font-weight="700">API</text>
+        <rect x="445" y="105" width="40" height="18" rx="9" fill="#ebf8ff" stroke="#63b3ed" stroke-width="1"/>
+        <text x="465" y="118" text-anchor="middle" fill="#2b6cb0" font-size="8" font-weight="700">API</text>
+        <rect x="215" y="195" width="40" height="18" rx="9" fill="#ebf8ff" stroke="#63b3ed" stroke-width="1"/>
+        <text x="235" y="208" text-anchor="middle" fill="#2b6cb0" font-size="8" font-weight="700">API</text>
+        <rect x="445" y="195" width="40" height="18" rx="9" fill="#ebf8ff" stroke="#63b3ed" stroke-width="1"/>
+        <text x="465" y="208" text-anchor="middle" fill="#2b6cb0" font-size="8" font-weight="700">API</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- API SECTION -->
+<section class="api-section" id="api">
+  <div class="container">
+    <div class="api-grid">
+      <div>
+        <span class="badge">INTEROPERABILIDADE</span>
+        <h2 class="text-white mb-16">API para Integração Total</h2>
+        <p style="color:rgba(255,255,255,.8);margin-bottom:36px">A BDUC disponibiliza uma API robusta que possibilita a interoperabilidade entre todos os sistemas da prefeitura, eliminando retrabalho e evitando a necessidade de lançamento da mesma informação em sistemas diferentes.</p>
+
+        <div class="api-feature">
+          <div class="api-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M8 5v14l11-7L8 5z" fill="#63b3ed"/></svg>
+          </div>
+          <div>
+            <h3>Integração em Tempo Real</h3>
+            <p>Sincronize dados entre sistemas automaticamente, sem intervenção manual.</p>
+          </div>
+        </div>
+
+        <div class="api-feature">
+          <div class="api-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" fill="#63b3ed"/></svg>
+          </div>
+          <div>
+            <h3>Regras Unificadas de Cadastro</h3>
+            <p>Defina padrões centrais de validação que são aplicados em todos os sistemas integrados.</p>
+          </div>
+        </div>
+
+        <div class="api-feature">
+          <div class="api-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6z" fill="#63b3ed"/><path d="M23 8h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z" fill="#63b3ed" opacity=".7"/></svg>
+          </div>
+          <div>
+            <h3>Zero Retrabalho</h3>
+            <p>Lance a informação uma única vez e ela estará disponível para todos os departamentos.</p>
+          </div>
+        </div>
+
+        <div class="api-feature">
+          <div class="api-feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" fill="#63b3ed"/></svg>
+          </div>
+          <div>
+            <h3>Documentação Completa</h3>
+            <p>API RESTful com documentação detalhada para facilitar a integração pelos fornecedores de sistemas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <!-- SVG: API visual -->
+        <svg viewBox="0 0 320 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:320px;width:100%">
+          <!-- Code block visual -->
+          <rect x="10" y="10" width="300" height="340" rx="16" fill="rgba(0,0,0,.3)" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+          <rect x="10" y="10" width="300" height="36" rx="16" fill="rgba(255,255,255,.08)"/>
+          <circle cx="32" cy="28" r="6" fill="#fc8181"/>
+          <circle cx="50" cy="28" r="6" fill="#f6e05e"/>
+          <circle cx="68" cy="28" r="6" fill="#68d391"/>
+          <text x="160" y="33" text-anchor="middle" fill="rgba(255,255,255,.5)" font-size="10" font-family="monospace">api.bduc.gov.br</text>
+
+          <text x="30" y="72" fill="#68d391" font-size="12" font-family="monospace" font-weight="600">GET</text>
+          <text x="65" y="72" fill="#63b3ed" font-size="12" font-family="monospace">/api/v1/cidadao/{cpf}</text>
+
+          <text x="30" y="100" fill="rgba(255,255,255,.4)" font-size="11" font-family="monospace">Resposta:</text>
+          <text x="30" y="120" fill="#f6e05e" font-size="11" font-family="monospace">{</text>
+          <text x="42" y="138" fill="#63b3ed" font-size="11" font-family="monospace">"nome"</text>
+          <text x="96" y="138" fill="#fff" font-size="11" font-family="monospace">: "João Silva",</text>
+          <text x="42" y="156" fill="#63b3ed" font-size="11" font-family="monospace">"cpf"</text>
+          <text x="82" y="156" fill="#fff" font-size="11" font-family="monospace">: "123.456.789-00",</text>
+          <text x="42" y="174" fill="#63b3ed" font-size="11" font-family="monospace">"endereço"</text>
+          <text x="120" y="174" fill="#fff" font-size="11" font-family="monospace">: "Rua ...",</text>
+          <text x="42" y="192" fill="#63b3ed" font-size="11" font-family="monospace">"saúde"</text>
+          <text x="100" y="192" fill="#fff" font-size="11" font-family="monospace">: { ... },</text>
+          <text x="42" y="210" fill="#63b3ed" font-size="11" font-family="monospace">"educação"</text>
+          <text x="120" y="210" fill="#fff" font-size="11" font-family="monospace">: { ... },</text>
+          <text x="42" y="228" fill="#63b3ed" font-size="11" font-family="monospace">"social"</text>
+          <text x="104" y="228" fill="#fff" font-size="11" font-family="monospace">: { ... }</text>
+          <text x="30" y="248" fill="#f6e05e" font-size="11" font-family="monospace">}</text>
+
+          <line x1="30" y1="268" x2="290" y2="268" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+          <text x="30" y="290" fill="#68d391" font-size="12" font-family="monospace" font-weight="600">POST</text>
+          <text x="72" y="290" fill="#63b3ed" font-size="12" font-family="monospace">/api/v1/cidadao</text>
+          <text x="30" y="310" fill="#fc8181" font-size="12" font-family="monospace" font-weight="600">PUT</text>
+          <text x="64" y="310" fill="#63b3ed" font-size="12" font-family="monospace">/api/v1/cidadao/{cpf}</text>
+          <text x="30" y="330" fill="#f6e05e" font-size="12" font-family="monospace" font-weight="600">PATCH</text>
+          <text x="82" y="330" fill="#63b3ed" font-size="12" font-family="monospace">/api/v1/cidadao/{cpf}</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section section-alt" id="funcionalidades">
+  <div class="container">
+    <h2 class="text-center mb-16 animate">Funcionalidades Detalhadas</h2>
+    <p class="section-subtitle text-center animate">Conheça todos os recursos que tornam a BDUC a solução completa para a gestão municipal de dados do cidadão.</p>
+
+    <div class="features-list">
+      <div class="feature-item animate">
+        <div class="feature-number">01</div>
+        <div>
+          <h3>Cadastro Centralizado do Cidadão</h3>
+          <p>Registro unificado com dados biográficos, biométricos e documentais. Identificação única por CPF com validação automática.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">02</div>
+        <div>
+          <h3>Histórico Familiar Completo</h3>
+          <p>Composição familiar, vínculos, dependentes e informações de núcleo familiar para políticas sociais direcionadas.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">03</div>
+        <div>
+          <h3>Módulo de Saúde</h3>
+          <p>Registro de condições de saúde, histórico de atendimentos em UBS e hospitais, cartão SUS vinculado ao cadastro.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">04</div>
+        <div>
+          <h3>Módulo de Educação</h3>
+          <p>Percurso educacional completo, matrículas, frequência escolar e histórico acadêmico integrado com a rede municipal.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">05</div>
+        <div>
+          <h3>Assistência Social</h3>
+          <p>Gestão de programas sociais, benefícios concedidos, acompanhamento CRAS/CREAS e situação de vulnerabilidade.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">06</div>
+        <div>
+          <h3>Situação Domiciliar</h3>
+          <p>Dados de moradia, condições habitacionais, geolocalização e histórico de endereços com integração ao cadastro territorial.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">07</div>
+        <div>
+          <h3>Mercado de Trabalho</h3>
+          <p>Trajetória profissional, qualificações, situação empregatícia e integração com programas de emprego e renda.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">08</div>
+        <div>
+          <h3>Login Único (SSO)</h3>
+          <p>Acesso unificado para servidores e cidadãos. Integração com Gov.br e autenticação segura com múltiplos fatores.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">09</div>
+        <div>
+          <h3>Controle de Acesso por Perfil</h3>
+          <p>Definição granular de permissões por secretaria, departamento e função. Cada servidor vê apenas o que é autorizado.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">10</div>
+        <div>
+          <h3>Relatórios e Dashboards</h3>
+          <p>Painéis gerenciais com indicadores em tempo real, exportação de dados e relatórios customizáveis por secretaria.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">11</div>
+        <div>
+          <h3>Auditoria e Rastreabilidade</h3>
+          <p>Registro completo de todas as operações realizadas: quem acessou, quando e quais dados foram consultados ou alterados.</p>
+        </div>
+      </div>
+
+      <div class="feature-item animate">
+        <div class="feature-number">12</div>
+        <div>
+          <h3>Conformidade com a LGPD</h3>
+          <p>Gestão de consentimento, anonimização de dados, direito ao esquecimento e controles de privacidade integrados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container animate">
+    <h2>Modernize a Gestão do seu Município</h2>
+    <p>A BDUC é a plataforma que sua prefeitura precisa para oferecer serviços públicos mais eficientes, integrados e centrados no cidadão.</p>
+    <a href="#" class="cta-btn">Solicite uma Demonstração</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <p>BDUC &mdash; Base de Dados Única do Cidadão &bull; Plataforma de Gestão Municipal Inteligente</p>
+  </div>
+</footer>
+
+<script>
+// Scroll animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
